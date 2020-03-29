@@ -7,7 +7,7 @@ function App(props) {
     startProductQuery()
     return (
         <div>
-            <h2>React App</h2>
+            <h2>Products App</h2>
         </div>
     )
 }

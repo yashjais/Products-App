@@ -9,8 +9,17 @@ module.exports.list = (req, res) => {
 
 module.exports.create = (req, res) => {
     const body = req.body
+    console.log(req)
+    console.log(body)
     const product = new Product(body)
     product.save()
+        .then(product => res.send(product))
+        .catch(err => res.send(err))
+}
+
+module.exports.show = (req, res) => {
+    const id = req.params.id
+    Product.findOne({id})
         .then(product => res.send(product))
         .catch(err => res.send(err))
 }
