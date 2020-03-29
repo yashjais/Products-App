@@ -120,12 +120,11 @@ const productSchema = new Schema({
         required: true
     },
     price_positioning_text: {
-        type: Number,
+        type: String,
         required: true
     },
     lv_url: {
-        type: Number,
-        required: true
+        type: String,
     },
     positioning: {
         page: {
