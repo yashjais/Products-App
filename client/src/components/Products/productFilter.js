@@ -1,38 +1,42 @@
 import React from 'react'
-
-import { Menu, Dropdown } from 'antd';
-import { DownOutlined } from '@ant-design/icons';
+import { connect } from 'react-redux'
+import { Menu, Dropdown, Button } from 'antd';
 
 const menu = (
   <Menu>
     <Menu.Item>
-      <a target="_blank" rel="noopener noreferrer" href="http://www.alipay.com/">
-        Filter 1
-      </a>
+      <a>discounted_products_list</a>
     </Menu.Item>
     <Menu.Item>
-      <a target="_blank" rel="noopener noreferrer" href="http://www.taobao.com/">
-        Filter 2
-      </a>
+      <a>discounted_products_count|avg_discount</a>
     </Menu.Item>
     <Menu.Item>
-      <a target="_blank" rel="noopener noreferrer" href="http://www.tmall.com/">
-        Filter 3
-      </a>
+      <a>expensive_list</a>
+    </Menu.Item><Menu.Item>
+      <a>competition_discount_diff_list</a>
     </Menu.Item>
   </Menu>
 )
 
-function ProductFilter() {
+function ProductFilter(props) {
+  const handleSubmit = (e) => {
+    console.log('clicked')
+    // props.dispatch()
+  }
     return(
-        <div>
-            <Dropdown overlay={menu}>
-                <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
-                Hover me <DownOutlined />
-                </a>
-            </Dropdown>,
-        </div>
+        <React.Fragment>
+              <Dropdown overlay={menu} placement="topRight">
+                <Button>Query</Button>
+              </Dropdown>
+              <Dropdown overlay={menu} placement="topRight">
+                <Button>Filter</Button>
+              </Dropdown>
+              {/* <Dropdown overlay={menu} placement="topRight">
+                <Button>bottomLeft</Button>
+              </Dropdown> */}
+              <Button onChange={handleSubmit}>Submit</Button>
+        </React.Fragment>
     )
 }
 
-export default ProductFilter
+export default connect()(ProductFilter)

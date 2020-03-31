@@ -1,7 +1,11 @@
 import axios from '../config/axios'
 
-export const startProductQuery = (query) => {
-    //axios.post
+export const startProductQuery = (body) => {
+    axios.post('http://localhost:3010/products')
+        .then(res => {
+            console.log(res.data)
+        })
+        .catch(err => console.log(err))
 }
 
 export const productQuery = (products) => {
