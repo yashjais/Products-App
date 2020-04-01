@@ -19,6 +19,73 @@ module.exports.create = (req, res) => {
         .catch(err => res.send(err))
 }
 
+module.exports.query = (req, res) => {
+    const body = req.body
+    if(body.query_type == 'discounted_products_list') {
+        const operand1 = body.filters[0].operand1
+        let operand2 = body.filters[0].operand2
+        const operator = body.filters[0].operator
+        // if(operand1 && operator && operand2){ // checking if coming filter is truthy value or not // coz server side authentication is necessary.}
+        if(operand1 == 'brand.name' && operand2) { // checking operands are valid or not
+            if(operator == '==') { // checking for the operator is '==' or not for 'brand.name'
+                Product
+                .find({'brand.name': operand2})
+                .limit(10)
+                    .then(product => {
+                        if(product.length > 0){
+                            res.send(product)
+                        } else {
+                            res.send([])
+                        }
+                    })
+                    .catch(err => res.send(err))
+            } else{
+                res.send('operator not valid')
+            }
+        } else if(operand1 == "discount") {
+            operand2 = Number(operand2) // checking if the operand 2 is a valid number
+            if(operand2){
+                if(operator == '=='){
+                    Product.aggregate([
+                        { $project: {'price.regular_price.value': 1, difference: {$subtract: ["$price.regular_price.value", "$price.offer_price.value"]}} },
+                        { $project: {discount: {$divide: ["$difference", "$price.regular_price.value"]}} },
+                        { $match: {discount: { $eq: operand2}} },
+                        { $limit: 10 }
+                      ]).
+                      then(products => res.send(products))
+                      .catch(err => res.send(err))
+                } else if(operator == '>'){
+                    Product.aggregate([
+                        { $project: {'price.regular_price.value': 1, difference: {$subtract: ["$price.regular_price.value", "$price.offer_price.value"]}} },
+                        { $project: {discount: {$divide: ["$difference", "$price.regular_price.value"]}} },
+                        { $match: {discount: { $gt: operand2}} },
+                        { $limit: 10 }
+                      ]).
+                      then(products => res.send(products))
+                      .catch(err => res.send(err))
+                } else if(operator == '<'){
+                    Product.aggregate([
+                        { $project: {'price.regular_price.value': 1, difference: {$subtract: ["$price.regular_price.value", "$price.offer_price.value"]}} },
+                        { $project: {discount: {$divide: ["$difference", "$price.regular_price.value"]}} },
+                        { $match: {discount: { $lt: operand2}} },
+                        { $limit: 10 }
+                      ]).
+                      then(products => res.send(products))
+                      .catch(err => res.send(err))
+                } else {
+                    res.send('operator is not valid')
+                }
+            } else {
+                res.send('operand 2 is not a number')
+            }
+        } else{
+            res.send('operand 1 is not valid')
+        }
+    } else {x
+        res.send('invalid request')
+    }
+}
+
 module.exports.show = (req, res) => {
     const _id = req.params.id
     Product.findOne({_id})
