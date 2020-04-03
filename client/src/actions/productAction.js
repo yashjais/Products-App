@@ -1,25 +1,35 @@
 import axios from '../config/axios'
 
 export const startProductQuery = (body) => {
-    axios.post('http://localhost:3010/products') // test it
-        .then(res => {
-            console.log(res.data)
-        })
-        .catch(err => console.log(err))
+    return (dispatch) => {
+        axios.post('/products/query', body) // test it
+            .then(res => {
+                const products = res.data
+                // console.log(products, products.hasOwnProperty('errors'))
+                if(products.hasOwnProperty('errors')) {
+                    alert(products.errors)
+                } else {
+                    dispatch(productQuery(products))
+                }
+            })
+            .catch(err => alert(err))
+    }
 }
 
 export const productQuery = (products) => {
-    // update the product in the redux store
+    return {
+        type: 'SET_PRODUCTS', payload: products
+    }
 }
 
 export const startGetProducts = () => {
     return (dispatch) => {
-        axios.get('http://localhost:3010/products')
+        axios.get('/products')
             .then(res => {
                 const products = res.data
                 dispatch(setProducts(products))
             })
-            .catch(err => console.log(err))
+            .catch(err => alert(err))
     }
 }
 

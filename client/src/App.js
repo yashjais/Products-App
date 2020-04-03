@@ -1,14 +1,14 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {BrowserRouter, Link, Route} from 'react-router-dom'
-import { Layout, Menu, Breadcrumb } from 'antd';
+import { Layout, Menu } from 'antd';
 import './App.css'
 
 import Home from './components/home'
 import ProductsPage from './components/Products/productsPage'
 import { startGetProducts } from './actions/productAction'
 
-const { Header, Content } = Layout;
+const { Header } = Layout;
 
 function App(props) {
     props.dispatch(startGetProducts())
@@ -28,8 +28,7 @@ function App(props) {
                     </Header>
                     
                     <Route path="/" component={Home} exact={true} />
-                    <Route path="/products" component={ProductsPage} /> 
-                   
+                    <Route path="/products" component={ProductsPage} exact={true} /> 
                     
                 </Layout>
             </BrowserRouter>
