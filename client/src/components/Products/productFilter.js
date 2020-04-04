@@ -127,7 +127,7 @@ class ProductFilter extends React.Component {
           <input type="text" placeholder={this.state.operand1 == 'discount' ? 'operand2(in %)' : 'operand2'} onChange={this.handleOperand2Change} value={this.state.operand2}/>
           <button onClick={this.handleSubmit}>submit</button>
           {
-            this.state.filter == 'expensive_list' && <p style={{marginTop: '-7px'}}>*can be used without any filters</p>
+            this.state.filter == 'expensive_list' && <p style={{marginTop: '-7px', marginBottom: '-5px'}}>*can be used without any filters</p>
           }
           </React.Fragment>
           }
@@ -156,7 +156,7 @@ class ProductFilter extends React.Component {
                 <option value="==">equal to</option>
               </select>
               <select onChange={this.handleOperand4Change} value={this.state.operand4}>
-                <option value="">operand2</option>
+                <option value="">site name</option>
                 {
                   this.state.websites.map(website => {
                     return (
