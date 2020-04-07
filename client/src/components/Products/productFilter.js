@@ -6,7 +6,7 @@ class ProductFilter extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      filters: ['discounted products list', 'discounted products count|avg discount', 'expensive list', 'competition discount diff list'],
+      filters: ['discounted_products_list', 'discounted_products_count|avg_discount', 'expensive_list', 'competition_discount_diff_list'],
       websites: [{name: "netaporter", _id: "5da6d40110309200045874e6"}, {name: "farfetch", _id: "5d0cc7b68a66a100014acdb0"}, {name: "mytheresa", _id: "5da94e940ffeca000172b12a"}, {name: "matchesfashion", _id: "5da94ef80ffeca000172b12c"}, {name: "ssense", _id: "5da94f270ffeca000172b12e"}, {name: "selfridges", _id: "5da94f4e6d97010001f81d72",}],
       operand1: '',
       operand2: '',
